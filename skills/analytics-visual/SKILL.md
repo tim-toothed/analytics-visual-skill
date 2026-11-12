@@ -1,7 +1,7 @@
 ---
 name: analytics-visual
 description: Create data visualization.
-version: 0.4.0
+version: 0.4.1
 author: tim-toothed
 license: MIT
 platforms: [linux, macos, windows]
@@ -53,12 +53,17 @@ plt.close(fig)
 
 Replace placeholders with actual paths. Immutable tokens contain background, panel, text, muted, accent, series, positive, negative, neutral. Apply tokens explicitly to annotations, series and deltas; existing artists are not recolored. `with style_context('dark') as t:` temporarily applies a preset and restores previous rcParams. Eight presets use DejaVu Sans. The procvetaev graphical template uses #C40123, #C2C2C2, #111111, #FFFFFF, panel #1C1C1C/grid #343434, and semantic delta green #39A96B/red #E2553D. Use uppercase headings with `procvetaev_font('heading')`, uppercase subheadings with `procvetaev_font('subheading')`, and `procvetaev_font('body')` for body text. Set figure-heading color to `t.accent` explicitly. `add_procvetaev_background(fig)` adds the supplied motif and localized red gradient below data axes; pattern_opacity=.05 or .10, or pattern=False. Missing motif skips that layer; missing fonts warn and fall back to DejaVu Sans. Read `references/asset-provenance.md` for asset terms. Bundled support: `assets/cyberpunk.mplstyle`, `assets/procvetaev-pattern.png`, `assets/fonts/TikTokSans18-heading.ttf`, `assets/fonts/TikTokSans18-subheading.ttf`, `assets/fonts/TikTokSans18-body.ttf`, `assets/fonts/OFL-TikTokSans.txt`.
 
+## Visual content and layout rules
+
+1. **Do not put defensive caveats inside the image.** Keep methodology notes, limitations, verification disclaimers, execution statuses, source-processing notes, and other operational commentary out of the entire image, including titles, subtitles, cards, footnotes, and footers. Put caveats that materially affect interpretation in the accompanying message as short bullet points. Omit routine disclaimers, repeated qualifications, and operational commentary. Do not expand the caption into a methodology report. Keep meaningful metric names (e.g. “Profit forecast”), units, and the reporting/comparison period, stating each shared context only once. Do not add service or branding sign-offs.
+2. **Use a compact, readable layout.** Size blocks to fit their content. Avoid oversized cards, excessive padding, large empty bands, and verbose labels. Use the recovered space for the actual data and legible text. Keep enough spacing to separate groups clearly; never achieve density by shrinking the data into tiny text. Check spacing across the whole image: avoid large unused gaps between cramped sections. Compactness does not require filling every empty area or adding more content.
+
 ## Meaning and layout
 
-- Priority: truthfulness, readability and semantics, then style. A story can connect verified results but is not obligatory. A single bar chart may answer a comparison. Never invent causes, previous values or comparisons; preserve caveats.
+- Priority: truthfulness, readability and semantics, then style. A story can connect verified results but is not obligatory. A single bar chart may answer a comparison. Never invent causes, previous values or comparisons; put necessary caveats in the accompanying message, not inside the image.
 - Choose chart type, layout and image count for the question. Do not force a two-image template or bury the main result in tiny text. Whitespace and typography serve the data.
 - Different units require separate labeled fields, columns or panels: one cell, one metric. Place a value and its delta together, on the same row/alignment. Do not concatenate money, percentages and counts with slashes. Label absolute deltas with units; distinguish percent from percentage points.
-- Comparable bars/panels require a shared scale, visible axis and zero baseline. A narrowed line/point scale must be explicit. Distinguish forecasts from facts. State the known period, comparison base, limitations and qualifiers. Missing values are not zero; do not hide gaps.
+- Comparable bars/panels require a shared scale, visible axis and zero baseline. A narrowed line/point scale must be explicit. Distinguish forecasts from facts. State the known period and comparison base once. Put necessary methodological limitations and qualifiers in the accompanying message. Missing values are not zero; do not hide gaps.
 - `delta_color(value, t)` uses green for positive, red for negative, neutral for zero/None/NaN/infinity. This indicates direction, not good/bad: rising expenses are not improvement. Always retain signs and values. Do not compute a percentage against a zero baseline without a defined method.
 - Use the preset palette/font; adjust label placement and grid locally. If small colored text lacks contrast, pair a readable semantic marker with a high-contrast number. Color never replaces labels. Use hatching or markers where useful.
 
@@ -68,7 +73,7 @@ Replace placeholders with actual paths. Immutable tokens contain background, pan
 2. Choose a format preserving all material metrics and identifiers. Optionally read `references/chart-guidelines.md` for additional forms/scales; the core rules above are self-contained.
 3. Create a short Python script in a writable task/scratch directory using direct Matplotlib, backend `Agg`, and Unicode-capable fonts. No Seaborn, browser, ImageGen or server. If Matplotlib is unavailable and `uv` is installed, use `uv run --no-project --with matplotlib python "<script>"`; otherwise use an environment with Matplotlib or report the missing prerequisite. Do not store customer data permanently in the skill.
 4. Save the PNG or JPEG and script together; close figures. Matplotlib selects the format from `.png`, `.jpg` or `.jpeg`. For JPEG use an opaque background and sufficient quality to keep labels legible. Split dense results only to preserve readability and content.
-5. Check numbers/completeness with code and inspect the actual final PNG or JPEG using the platform's image-viewing tool: color meaning, conclusions, units, separated fields, labels/Unicode, scales, readability, contrast, margins, completeness and cropping. A clipping-only check is insufficient. Fix before delivery.
+5. Check numbers/completeness with code and inspect the actual final PNG or JPEG using the platform's image-viewing tool: color meaning, conclusions, units, separated fields, labels/Unicode, scales, readability, contrast, margins, completeness and cropping. A clipping-only check is insufficient. Check the entire image for defensive caveats, operational commentary, repeated context, oversized cards and excessive whitespace; remove them or reflow the layout. Fix before delivery.
 6. Attach the image or provide its accessible local path as described above, with a brief explanation of notation. Do not repeat the entire report; supply the source table/code on request.
 
 Synthetic gallery: `uv run --no-project --with matplotlib --with pillow python "<skill-dir>/scripts/style_gallery.py" --output "<scratch-dir>/style-gallery"`.
